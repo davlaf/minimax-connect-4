@@ -4,14 +4,17 @@ import "fmt"
 
 type BoardBits struct {
 	Bits uint64
+	Empty uint64
 }
 
 func (bits *BoardBits) MoveLeft(amount int) {
 	bits.Bits = bits.Bits << (6*uint64(amount))
+	bits.Empty = bits.Empty << (6*uint64(amount))
 }
 
 func (bits *BoardBits) MoveUp(amount int) {
 	bits.Bits = bits.Bits << (1*uint64(amount))
+	bits.Empty = bits.Empty << (1*uint64(amount))
 }
 
 func (bits BoardBits) Print() {
@@ -32,6 +35,109 @@ func (bits BoardBits) Print() {
 }
 
 func main2() {
+	GenerateTripleMoves()
+}
+
+func GenerateTripleMoves() {
+	horizontal_board1 := BoardBits{
+		Bits:  0b000000000001000001000001,
+		Empty: 0b000001000000000000000000,
+	}
+	horizontal_board2 := BoardBits{
+		Bits:  0b000001000001000001000000,
+		Empty: 0b000000000000000000000001,
+	}
+	vertical_board1 := BoardBits{
+		Bits:  0b0111,
+		Empty: 0b1000,
+	}
+	vertical_board2 := BoardBits{
+		Bits:  0b1110,
+		Empty: 0b0001,
+	}
+	diagonal_left1 := BoardBits{
+		Bits:  0b000000000100000010000001,
+		Empty: 0b001000000000000000000000,
+	}
+	diagonal_left2 := BoardBits{
+		Bits:  0b001000000100000010000000,
+		Empty: 0b000000000000000000000001,
+	}
+	diagonal_right1 := BoardBits{
+		Bits:  0b000000000010000100001000,
+		Empty: 0b000001000000000000000000,
+	}
+	diagonal_right2 := BoardBits{
+		Bits:  0b000001000010000100000000,
+		Empty: 0b000000000000000000001000,
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 6; j++ {
+			board := horizontal_board1
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,    \nEmpty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 6; j++ {
+			board := horizontal_board2
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 7; i++ {
+		for j := 0; j < 3; j++ {
+			board := vertical_board1
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 7; i++ {
+		for j := 0; j < 3; j++ {
+			board := vertical_board2
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 3; j++ {
+			board := diagonal_left1
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 3; j++ {
+			board := diagonal_left2
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 3; j++ {
+			board := diagonal_right1
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 3; j++ {
+			board := diagonal_right2
+			board.MoveLeft(i)
+			board.MoveUp(j)
+			fmt.Printf("BoardBits{\n    Bits: 0b%b,\n    Empty: 0b%b,\n},\n",board.Bits,board.Empty)
+		}
+	}
+}
+
+func GenerateWinningMoves() {
 	horizontal_board := BoardBits{
 		Bits: 0b000001000001000001000001,
 	}
@@ -76,8 +182,4 @@ func main2() {
 			fmt.Printf("0b%b\n",board.Bits)
 		}
 	}
-}
-
-func GenerateWinningMoves() {
-
 }
